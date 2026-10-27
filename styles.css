@@ -85,8 +85,8 @@ h3 { font-family: var(--sans); font-weight: 600; line-height: 1.2; }
 .nav a:hover { color: var(--fg); background: var(--surface-2); }
 
 /* ---------- Hero ---------- */
-.hero { padding-block: clamp(24px, 6vw, 64px) clamp(48px, 7vw, 96px); }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
+.hero { overflow-x: clip; padding-block: clamp(24px, 6vw, 64px) clamp(48px, 7vw, 96px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
 .hero h1 { margin-top: 18px; font-size: clamp(3.6rem, 10vw, 7.4rem); line-height: 0.9; }
 .hero h1 em { font-style: italic; color: var(--glow); text-shadow: 0 0 40px rgba(201, 184, 255, 0.45); }
 .hero .intro { margin-top: 26px; font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; color: var(--muted); max-width: 30em; }
@@ -108,8 +108,7 @@ h3 { font-family: var(--sans); font-weight: 600; line-height: 1.2; }
 
 /* ---------- Orbit of interests ---------- */
 .orbit-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
-.orbit { position: relative; width: min(100%, 470px); aspect-ratio: 1; max-width: 100%; }
-.orbit:hover .ring, .orbit:hover .planet { animation-play-state: paused; }
+.orbit { position: relative; width: min(100%, 560px); aspect-ratio: 1; max-width: 100%; }
 .sun {
   position: absolute; left: 50%; top: 50%; width: 92px; height: 92px; transform: translate(-50%, -50%);
   border-radius: 50%; display: grid; place-items: center; text-align: center;
@@ -120,31 +119,38 @@ h3 { font-family: var(--sans); font-weight: 600; line-height: 1.2; }
 .ring {
   position: absolute; left: 50%; top: 50%; border-radius: 50%;
   border: 1px solid var(--line);
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation: spin var(--dur) linear infinite;
+  transform: translate(-50%, -50%);
 }
-.ring.r1 { width: 44%; height: 44%; --dur: 70s; }
-.ring.r2 { width: 70%; height: 70%; --dur: 110s; animation-direction: reverse; }
-.ring.r3 { width: 97%; height: 97%; --dur: 160s; border-style: dashed; }
-@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.ring.r1, .orbiter.o1 { width: 38%; height: 38%; }
+.ring.r2, .orbiter.o2 { width: 60%; height: 60%; }
+.ring.r3, .orbiter.o3 { width: 80%; height: 80%; }
+.ring.r4, .orbiter.o4 { width: 100%; height: 100%; }
+.ring.r4 { border-style: dashed; }
 .arm { position: absolute; inset: 0; transform: rotate(var(--a)); pointer-events: none; }
 .planet {
   position: absolute; left: 50%; top: 0;
   transform: translate(-50%, -50%) rotate(calc(-1 * var(--a)));
-  animation: counter var(--dur) linear infinite;
+  animation: float 6s ease-in-out infinite; animation-delay: var(--d, 0s);
   white-space: nowrap; pointer-events: auto;
   padding: 6px 12px; border-radius: 999px;
   font-size: 0.86rem; font-weight: 600;
   background: rgba(12, 14, 28, 0.85); border: 1px solid var(--line-2); color: var(--fg);
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   display: inline-flex; align-items: center; gap: 7px;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.ring.r2 .planet { animation-direction: reverse; }
+.planet:hover { border-color: var(--c, var(--glow)); box-shadow: 0 0 18px color-mix(in srgb, var(--c, var(--glow)) 45%, transparent); }
+.ring.r4 .planet { font-size: 0.8rem; padding: 5px 11px; }
 .planet::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--glow)); box-shadow: 0 0 10px var(--c, var(--glow)); }
-@keyframes counter {
-  from { transform: translate(-50%, -50%) rotate(calc(-1 * var(--a))); }
-  to { transform: translate(-50%, -50%) rotate(calc(-1 * var(--a) - 360deg)); }
-}
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -4px; } }
+/* Small moons travelling around each orbit */
+.orbiter { position: absolute; left: 50%; top: 50%; border-radius: 50%; transform: translate(-50%, -50%) rotate(0deg); animation: spin var(--dur) linear infinite; pointer-events: none; }
+.orbiter::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--mc, var(--glow)); box-shadow: 0 0 10px 2px var(--mc, var(--glow)); }
+.orbiter.o1 { --dur: 26s; }
+.orbiter.o2 { --dur: 44s; animation-direction: reverse; }
+.orbiter.o3 { --dur: 62s; --mc: var(--rose); }
+.orbiter.o4 { --dur: 90s; --mc: var(--gold); animation-direction: reverse; }
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 .orbit-legend { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .orbit-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
 .c-work { background: var(--glow); box-shadow: 0 0 8px var(--glow); }
@@ -393,7 +399,27 @@ td.zero { color: var(--gold); font-weight: 600; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .ring, .planet, .vinyl, .player .disc, .player .eqbars b { animation: none !important; }
+  .orbiter, .planet, .vinyl, .player .disc, .player .eqbars b { animation: none !important; }
   .polaroid { transition: none; }
 }
 .cs-hero h1 em { font-style: italic; color: var(--glow); }
+
+/* Tiny UFO in the middle of the orbit */
+.sun.ufo {
+  width: 128px; height: 120px; border-radius: 0; background: none; box-shadow: none;
+  filter: drop-shadow(0 0 22px rgba(201, 184, 255, 0.45));
+  animation: hover 4.5s ease-in-out infinite;
+}
+.sun.ufo svg { width: 100%; height: 100%; overflow: visible; }
+.ufo-beam { animation: beam 3s ease-in-out infinite; }
+.light { animation: blink 1.6s ease-in-out infinite; }
+.light.l2 { animation-delay: .32s; } .light.l3 { animation-delay: .64s; } .light.l4 { animation-delay: .96s; } .light.l5 { animation-delay: 1.28s; }
+.alien-eyes { transform-box: fill-box; transform-origin: center; animation: blinkeyes 5s infinite; }
+@keyframes hover {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
+  50% { transform: translate(-50%, calc(-50% - 8px)) rotate(3deg); }
+}
+@keyframes beam { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes blinkeyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@media (prefers-reduced-motion: reduce) { .sun.ufo, .ufo-beam, .light, .alien-eyes { animation: none !important; } }
