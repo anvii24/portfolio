@@ -7,22 +7,24 @@
 <meta name="description" content="How we attacked our own health Q&A system with fake pages based on real Indian health myths, and defended it with search techniques built from scratch.">
 <meta property="og:title" content="MythTrace Case Study · Anvi Gupta">
 <meta property="og:description" content="Defending a health AI against poisoned pages with classic information retrieval.">
-<meta name="theme-color" content="#f1f2ee">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#07080f">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="page">
 
 <header class="topbar">
   <div class="wrap">
-    <a class="wordmark" href="../index.html">Anvi Gupta</a>
+    <a class="wordmark" href="index.html"><span class="dot" aria-hidden="true">AG</span>Anvi Gupta</a>
     <nav class="nav" aria-label="Site">
-      <a href="../index.html#work">Work</a>
-      <a href="../index.html#about">About</a>
-      <a href="../index.html#contact">Contact</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -30,16 +32,16 @@
 <main>
   <section class="cs-hero">
     <div class="wrap">
-      <a class="back" href="../index.html#work">← All work</a>
-      <h1>MythTrace: a health AI that can't be fed myths</h1>
+      <a class="back" href="index.html#work">← All work</a>
+      <h1>MythTrace: a health AI that can't be <em>fed myths</em></h1>
       <p class="intro">An AI health assistant is only as trustworthy as the pages it reads. We built one, tried to poison it with fake pages based on real Indian health myths, and defended it with search techniques we wrote from scratch.</p>
       <dl class="cs-meta">
-        <div><dt>Context</dt><dd>CSD358 Information Retrieval hackathon, Track 1</dd></div>
+        <div><dt>Context</dt><dd>Information Retrieval course project (CSD358)</dd></div>
         <div><dt>Team</dt><dd>Anvi Gupta, Antara Shyam, Mihir MKC</dd></div>
         <div><dt>My role</dt><dd>System design and the full search and answer pipeline</dd></div>
         <div><dt>Stack</dt><dd>Python, Streamlit, Claude Sonnet 5.5</dd></div>
       </dl>
-      <div class="actions" style="margin-top:28px">
+      <div class="actions">
         <a class="btn primary" href="https://github.com/anvii24/mythtrace" target="_blank" rel="noopener">Code on GitHub</a>
       </div>
     </div>
@@ -47,7 +49,7 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="label">The problem</span><h2>Whoever ranks first decides the answer</h2></div>
+      <div class="section-head"><span class="hand">the problem</span><h2>Whoever ranks first decides the answer</h2></div>
       <div class="section-body"><div class="content prose-col">
         <p>Many AI assistants use <strong>retrieval-augmented generation (RAG)</strong>: they first search for a few relevant passages, then ask the AI to answer using only those passages, with citations. This reduces made-up answers, but it moves the trust problem to search. If someone can get their page ranked high, they decide what the AI says.</p>
         <p>The PoisonedRAG paper showed that adding just five fake texts per question to a database of millions was enough to fool a system 90% of the time. The fake text is written to match the question closely, which is exactly what a ranking function rewards.</p>
@@ -59,7 +61,7 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="label">What we built</span><h2>Every search step, written by hand</h2></div>
+      <div class="section-head"><span class="hand">what we built</span><h2>Every search step, written by hand</h2></div>
       <div class="section-body"><div class="content prose-col">
         <p>No library does the indexing or ranking. We crawled <strong>1,000 MedlinePlus pages</strong> politely (following robots.txt, one request per second), split them into <strong>2,762 sections</strong>, and built our own inverted index, tf-idf and BM25 ranking, and PageRank over the link graph. The top five sections go to Claude, which must cite a source after every claim and say "I don't have enough information" when the sources don't cover the question.</p>
         <h3>Then we attacked it</h3>
@@ -74,15 +76,15 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="label">Results</span><h2>Fake websites stopped, hidden fakes harder</h2></div>
-      <div class="section-body"><div class="content" style="display:flex;flex-direction:column;gap:24px">
+      <div class="section-head"><span class="hand">results</span><h2>Fake websites stopped, hidden fakes harder</h2></div>
+      <div class="section-body"><div class="content stack">
         <div class="stats">
-          <div class="stat"><span class="num">0<span style="font-size:1.4rem;color:var(--muted)"> / 96</span></span><p>hand-labelled answers repeated a myth. The AI argued against the fake page every time it saw one.</p></div>
+          <div class="stat"><span class="num">0<small> / 96</small></span><p>hand-labelled answers repeated a myth. The AI argued against the fake page every time it saw one.</p></div>
           <div class="stat"><span class="num"><s>2.3</s>0.9</span><p>real sources pushed out of the top five by each fake page, on average, before and after defenses</p></div>
           <div class="stat"><span class="num"><s>0.733</s>0.815</span><p>MRR on normal questions. The defenses made everyday search slightly better, not worse.</p></div>
         </div>
 
-        <figure class="chart" style="margin:0" role="img" aria-label="Bar chart. Fake pages that reached the AI's top five sources, out of 8 each. tf-idf with no defenses: external 8, insider 8. BM25 with no defenses: 8 and 8. BM25 with trust score only: 8 and 8. BM25 with copy and stuffing checks: 0 and 5. BM25 with all defenses: 0 and 5.">
+        <figure class="chart" role="img" aria-label="Bar chart. Fake pages that reached the AI's top five sources, out of 8 each. tf-idf with no defenses: external 8, insider 8. BM25 with no defenses: 8 and 8. BM25 with trust score only: 8 and 8. BM25 with copy and stuffing checks: 0 and 5. BM25 with all defenses: 0 and 5.">
           <h3>Fake pages that reached the AI's top five sources</h3>
           <div class="legend"><span><i class="key-a"></i>Fake websites (of 8)</span><span><i class="key-b"></i>Hidden in real pages (of 8)</span></div>
           <div class="bars">
@@ -132,9 +134,9 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="label">Limitations</span><h2>What still gets through</h2></div>
+      <div class="section-head"><span class="hand">limitations</span><h2>What still gets through</h2></div>
       <div class="section-body"><div class="content prose-col">
-        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px">
+        <ul class="plain-list">
           <li><strong>Subtle hidden fakes.</strong> 5 of 8 fake sections hidden in real pages still reached the top five. A lightly stuffed section on a trusted page looks statistically like a genuine one.</li>
           <li><strong>Cross-question leaks.</strong> The copy check only catches pages stuffed with the current question's words. The fenugreek page still ranked 3rd for the bitter gourd question.</li>
           <li><strong>Word matching failures.</strong> For "warning signs of a heart attack", the words "attack" and "warning" pulled in panic attack pages, so the AI correctly declined to answer.</li>
@@ -148,14 +150,14 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="label">Who did what</span><h2>A team of three</h2></div>
-      <div class="section-body"><div class="content" style="display:flex;flex-direction:column;gap:20px">
+      <div class="section-head"><span class="hand">who did what</span><h2>A team of three</h2></div>
+      <div class="section-body"><div class="content stack">
         <div class="team">
           <div class="you"><span class="label">Anvi Gupta</span><h3>System and pipeline</h3><p>Designed the system and built the crawler, chunking, text processing, inverted and positional index, tf-idf and BM25 ranking, PageRank, defenses and the answer layer, using Claude Code.</p></div>
           <div><span class="label">Antara Shyam</span><h3>Attacks and labelling</h3><p>Set up API access, wrote the 16 fake pages from real Indian health myths, and hand-labelled all 96 attacked answers.</p></div>
           <div><span class="label">Mihir MKC</span><h3>Ethics and evaluation</h3><p>Checked the robots.txt rules of candidate sites and wrote the 25 test questions with expected pages and reference answers.</p></div>
         </div>
-        <p class="note" style="color:var(--muted);font-size:0.95rem;max-width:44em">All three of us chose the topic, tested each stage, ran the experiments, designed the demo app and wrote the report. Most of the code was written with Claude Code, following our prompts and design decisions; every component was run and checked by the team. The fake pages are false health claims made for a security experiment. They are not health advice.</p>
+        <p class="fineprint">All three of us chose the topic, tested each stage, ran the experiments, designed the demo app and wrote the report. Most of the code was written with Claude Code, following our prompts and design decisions; every component was run and checked by the team. The fake pages are false health claims made for a security experiment. They are not health advice.</p>
       </div></div>
     </div>
   </section>
@@ -163,9 +165,11 @@
 
 <footer class="site">
   <div class="wrap">
-    <a href="../index.html">← Anvi Gupta</a>
+    <a href="index.html">← Anvi Gupta</a>
     <a href="safeshare.html">Next: SafeShare →</a>
   </div>
 </footer>
+</div>
+<script src="site.js"></script>
 </body>
 </html>

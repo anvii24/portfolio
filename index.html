@@ -5,22 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Anvi Gupta</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Anvi Gupta builds AI for moments where a mistake can't be taken back. Computer science student at Shiv Nadar Institution of Eminence.">
+<meta name="description" content="Anvi Gupta: computer science student who builds AI for places where mistakes really matter. Projects include SafeShare, MythTrace and LitTune.">
 <meta property="og:title" content="Anvi Gupta">
-<meta property="og:description" content="I build AI for moments where a mistake can't be taken back. Projects: SafeShare, MythTrace, condenser leak detection.">
+<meta property="og:description" content="I build AI for places where mistakes really matter. SafeShare, MythTrace, LitTune and more.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#f1f2ee">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#07080f">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Mono&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<canvas id="stars" aria-hidden="true"></canvas>
 
+<div class="page">
 <header class="topbar">
   <div class="wrap">
-    <a class="wordmark" href="index.html">Anvi Gupta</a>
+    <a class="wordmark" href="index.html"><span class="dot" aria-hidden="true">AG</span>Anvi Gupta</a>
     <nav class="nav" aria-label="Sections">
       <a href="#work">Work</a>
       <a href="#experience">Experience</a>
@@ -31,129 +33,168 @@
 </header>
 
 <main>
-  <section class="hero">
-    <div class="wrap">
-      <h1>I build AI for moments where a mistake <span class="undo">can't be taken back.</span></h1>
-      <p class="intro">I'm <strong>Anvi Gupta</strong>, a computer science student at Shiv Nadar Institution of Eminence with a minor in economics. I like problems where getting it wrong has a real cost, and I design for that cost first.</p>
-      <ul class="misses" aria-label="What each project protects against">
-        <li><span class="label">SafeShare</span><p>An Aadhaar number sent on WhatsApp can't be unsent.</p></li>
-        <li><span class="label">MythTrace</span><p>A health myth repeated by an AI sounds like medical advice.</p></li>
-        <li><span class="label">Leak detection</span><p>A leaking condenser that passes inspection ships to a customer.</p></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" id="work">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="label">Selected work</span>
-        <h2>Three systems, three costly mistakes</h2>
+  <section class="hero" data-track="Intro">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Hello, I'm</p>
+        <h1>Anvi <em>Gupta</em></h1>
+        <p class="intro">A computer science student with an economics minor. I build <strong>AI for places where mistakes really matter</strong>, and I care a lot about how people actually use it.</p>
+        <div class="cta">
+          <a class="btn primary" href="#work">See my work</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
       </div>
 
-      <div class="projects">
-        <!-- SafeShare -->
-        <article class="project">
-          <div class="text">
-            <div class="meta"><span class="label">Privacy · Solo · Oct 2026</span><span class="status">Live</span></div>
-            <h3>SafeShare</h3>
-            <p class="pitch">A privacy-first web app that hides Aadhaar, PAN, bank and phone numbers on document photos before you share them, entirely on your phone with no uploads.</p>
-            <div class="cost"><span class="label">Cost of a miss</span><p>A full ID number forwarded and stored in chats you'll never see.</p></div>
-            <div class="result"><span class="num">34/34</span><span>sensitive items caught on the test set, up from 33 after the first evaluation found a bug</span></div>
-            <ul class="tags"><li>React</li><li>TypeScript</li><li>On-device OCR</li><li>English + Hindi</li><li>Offline web app</li></ul>
-            <div class="actions">
-              <a class="btn primary" href="projects/safeshare.html">Read the case study</a>
-              <a class="btn" href="https://safeshare-nine.vercel.app/" target="_blank" rel="noopener">Try it</a>
-              <a class="btn" href="https://github.com/anvii24/safeshare" target="_blank" rel="noopener">Code</a>
-            </div>
+      <div class="orbit-wrap">
+        <div class="orbit" role="img" aria-label="Interests orbiting my name. Work: AI and machine learning, information retrieval, human-computer interaction, AI for high-stakes industries. Life: Kathak, reading, writing, music, baking.">
+          <div class="ring r3">
+            <div class="arm" style="--a:0deg"><span class="planet" style="--c:var(--rose)">Kathak</span></div>
+            <div class="arm" style="--a:72deg"><span class="planet" style="--c:var(--rose)">Reading</span></div>
+            <div class="arm" style="--a:144deg"><span class="planet" style="--c:var(--rose)">Writing</span></div>
+            <div class="arm" style="--a:216deg"><span class="planet" style="--c:var(--rose)">Music</span></div>
+            <div class="arm" style="--a:288deg"><span class="planet" style="--c:var(--rose)">Baking</span></div>
           </div>
-          <div class="visual phones">
-            <img src="assets/safeshare/review.webp" alt="SafeShare review screen with four detected numbers covered on a sample ID card" width="780" height="1688" loading="lazy">
-            <img src="assets/safeshare/share.webp" alt="SafeShare share screen with a before and after slider" width="780" height="1688" loading="lazy">
+          <div class="ring r2">
+            <div class="arm" style="--a:40deg"><span class="planet">Information retrieval</span></div>
+            <div class="arm" style="--a:160deg"><span class="planet">Human-computer interaction</span></div>
+            <div class="arm" style="--a:280deg"><span class="planet">AI for high-stakes industries</span></div>
           </div>
-        </article>
+          <div class="ring r1">
+            <div class="arm" style="--a:100deg"><span class="planet">AI / ML</span></div>
+          </div>
+          <div class="sun" aria-hidden="true">AG</div>
+        </div>
+        <div class="orbit-legend"><span><i class="c-work"></i>What I work on</span><span><i class="c-life"></i>What I love outside it</span></div>
 
-        <!-- MythTrace -->
-        <article class="project">
-          <div class="text">
-            <div class="meta"><span class="label">Information retrieval · Team of 3 · Oct 2026</span><span class="status">Course hackathon</span></div>
-            <h3>MythTrace</h3>
-            <p class="pitch">A health Q&amp;A system that answers only from 1,000 trusted MedlinePlus pages. We attacked it with 16 fake pages built on real Indian health myths, then defended it with search techniques written from scratch.</p>
-            <div class="cost"><span class="label">Cost of a miss</span><p>Someone stops their diabetes medicine because an AI cited a fake page.</p></div>
-            <div class="result"><span class="num">0 of 96</span><span>hand-checked answers repeated a myth. Every fake website was pushed out of the AI's sources.</span></div>
-            <ul class="tags"><li>Python</li><li>BM25 + tf-idf</li><li>PageRank</li><li>RAG</li><li>Claude</li></ul>
-            <div class="actions">
-              <a class="btn primary" href="projects/mythtrace.html">Read the case study</a>
-              <a class="btn" href="https://github.com/anvii24/mythtrace" target="_blank" rel="noopener">Code</a>
-            </div>
+        <div class="constellation">
+          <div class="group">
+            <span class="label">What I work on</span>
+            <ul>
+              <li>AI / ML</li><li>AI for high-stakes industries</li><li>Human-computer interaction</li><li>Information retrieval</li>
+            </ul>
           </div>
-          <div class="visual">
-            <div class="minichart" role="img" aria-label="Fake pages in the AI's top five sources: 16 of 16 with no defenses, 5 of 16 with all defenses on.">
-              <p class="label">Fake pages that reached the AI</p>
-              <div class="mrow"><span>No defenses</span><div class="track"><div class="fill b full"></div></div><b>16/16</b></div>
-              <div class="mrow"><span>All defenses</span><div class="track"><div class="fill a part"></div></div><b>5/16</b></div>
-              <p class="mnote">All 8 fake websites blocked. 5 of 8 fakes hidden inside real pages still got through.</p>
-            </div>
+          <div class="group">
+            <span class="label">What I love outside it</span>
+            <ul>
+              <li style="--c:var(--rose)">Kathak</li><li style="--c:var(--rose)">Reading</li><li style="--c:var(--rose)">Writing</li><li style="--c:var(--rose)">Music</li><li style="--c:var(--rose)">Baking</li>
+            </ul>
           </div>
-        </article>
-
-        <!-- Bubble monitoring -->
-        <article class="project">
-          <div class="text">
-            <div class="meta"><span class="label">Computer vision · Solo · 2026</span><span class="status">In progress</span></div>
-            <h3>Condenser leak detection</h3>
-            <p class="pitch">A camera system for factory dip tests. A condenser is dipped in water, and the system watches for a steady stream of air bubbles that signals a leak, then records an automatic pass or fail.</p>
-            <div class="cost"><span class="label">Cost of a miss</span><p>A leaking unit passes inspection and fails in a customer's home.</p></div>
-            <div class="result"><span class="num small">Now</span><span>building a tabletop leak rig with known leak sizes to collect labelled footage, then testing on a real dip-test line</span></div>
-            <ul class="tags"><li>OpenCV</li><li>YOLO</li><li>Industrial QA</li></ul>
-          </div>
-          <div class="visual">
-            <svg viewBox="0 0 320 220" role="img" aria-label="Diagram: a camera watches a condenser coil under water. Bubbles rise from one spot and are boxed as a leak.">
-              <rect class="tank-water" x="40" y="70" width="240" height="130" rx="4"></rect>
-              <path class="tank-line" d="M40 40 V200 H280 V40"></path>
-              <path class="tank-coil" d="M80 170 H240 M80 150 H240 M80 170 A10 10 0 0 1 80 150 M240 150 A10 10 0 0 1 240 130 M80 130 H240"></path>
-              <g class="bubble-rise"><circle class="tank-bubble" cx="182" cy="120" r="4"></circle></g>
-              <g class="bubble-rise d2"><circle class="tank-bubble" cx="184" cy="120" r="3"></circle></g>
-              <g class="bubble-rise d3"><circle class="tank-bubble" cx="180" cy="120" r="5"></circle></g>
-              <rect class="tank-box" x="164" y="42" width="38" height="90" rx="3"></rect>
-              <text class="tank-text" x="208" y="54">LEAK</text>
-              <text class="tank-text" x="208" y="68">steady stream</text>
-              <rect class="tank-cam" x="16" y="14" width="28" height="18" rx="3"></rect>
-              <text class="tank-cam-text" x="52" y="27">camera</text>
-            </svg>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="label">Also built</span>
-        <h2>Smaller projects</h2>
-      </div>
-      <div class="section-body">
-        <div class="content mini">
-          <div><span class="label">HTML/CSS/JS</span><h3>LitTune</h3><p>A mood-based book and music discovery site with playlist curation and interactive dashboards, conceived and built on my own.</p></div>
-          <div><span class="label">Python · NLP · ML</span><h3>Feedback sentiment analysis</h3><p>An NLP pipeline that classifies student feedback, turning free text into insights for course improvement.</p></div>
-          <div><span class="label">Python · ML</span><h3>Two-tier memory management</h3><p>Uses machine learning to decide where data lives across memory tiers, for faster access.</p></div>
-          <div><span class="label">SQL · Database design</span><h3>Internship matching marketplace</h3><p>A relational system that matches students to internships by skills and eligibility, with automatic shortlisting.</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="experience">
+  <section class="section" id="work" data-track="Selected work">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">Experience</span>
-        <h2>Where I've worked</h2>
+        <span class="eyebrow">Side A</span>
+        <h2>Selected <em>work</em></h2>
       </div>
-      <div class="section-body">
-        <div class="content timeline">
-          <div class="role">
-            <span class="when">May – Aug 2026</span>
-            <div>
+
+      <div class="songs">
+        <article class="song">
+          <div class="polaroid-col">
+            <figure class="polaroid" style="margin:0">
+              <div class="photo"><img src="review.webp" alt="SafeShare review screen with four detected numbers covered on a sample ID card" width="780" height="1688" loading="lazy"></div>
+              <figcaption class="caption">nothing leaves your phone</figcaption>
+            </figure>
+          </div>
+          <div class="notes">
+            <span class="no">A1</span>
+            <h3>SafeShare</h3>
+            <div class="meta"><span class="pill">Privacy</span><span class="pill">Solo</span><span class="pill live">Live</span></div>
+            <p class="pitch">A privacy-first web app that hides Aadhaar, PAN, bank and phone numbers on document photos before you share them, entirely on your phone with no uploads.</p>
+            <div class="result"><span class="num">34/34</span><span>sensitive items caught on the test set, up from 33 after testing found a bug</span></div>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>On-device OCR</li><li>English + Hindi</li><li>Works offline</li></ul>
+            <div class="actions">
+              <a class="btn primary" href="safeshare.html">Read the case study</a>
+              <a class="btn" href="https://safeshare-nine.vercel.app/" target="_blank" rel="noopener">Try it</a>
+              <a class="btn" href="https://github.com/anvii24/safeshare" target="_blank" rel="noopener">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="song">
+          <div class="polaroid-col">
+            <figure class="polaroid" style="margin:0">
+              <div class="photo night">
+                <div class="minichart" role="img" aria-label="Fake pages in the AI's top five sources: 16 of 16 with no defenses, 5 of 16 with all defenses on.">
+                  <span class="mini-big">0/96</span>
+                  <span class="label">myths repeated by the AI</span>
+                  <div class="mrow"><span>No defense</span><span class="track"><span class="fill b full"></span></span><b>16/16</b></div>
+                  <div class="mrow"><span>Defended</span><span class="track"><span class="fill a part"></span></span><b>5/16</b></div>
+                  <p class="mnote">Fake pages that reached the AI's top five sources</p>
+                </div>
+              </div>
+              <figcaption class="caption">no myths allowed</figcaption>
+            </figure>
+          </div>
+          <div class="notes">
+            <span class="no">A2</span>
+            <h3>MythTrace</h3>
+            <div class="meta"><span class="pill">Information retrieval</span><span class="pill">Team of 3</span></div>
+            <p class="pitch">A health Q&amp;A system that answers only from 1,000 trusted MedlinePlus pages. We attacked it with 16 fake pages built on real Indian health myths, then defended it with search techniques written from scratch.</p>
+            <div class="result"><span class="num">0 of 96</span><span>hand-checked answers repeated a myth, and every fake website was pushed out of the AI's sources</span></div>
+            <ul class="tags"><li>Python</li><li>BM25 + tf-idf</li><li>PageRank</li><li>RAG</li><li>Claude</li></ul>
+            <div class="actions">
+              <a class="btn primary" href="mythtrace.html">Read the case study</a>
+              <a class="btn" href="https://github.com/anvii24/mythtrace" target="_blank" rel="noopener">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="song">
+          <div class="polaroid-col">
+            <figure class="polaroid" style="margin:0">
+              <div class="photo night">
+                <div class="mood" role="img" aria-label="Illustration: a mood is picked and LitTune suggests something to read and something to listen to.">
+                  <div class="mood-chips"><span class="on">cozy</span><span>dreamy</span><span>restless</span><span>brave</span></div>
+                  <div class="vinyl"></div>
+                  <div class="pair"><span>Read</span><span>+</span><span>Listen</span></div>
+                </div>
+              </div>
+              <figcaption class="caption">pick a mood</figcaption>
+            </figure>
+          </div>
+          <div class="notes">
+            <span class="no">A3</span>
+            <h3>LitTune</h3>
+            <div class="meta"><span class="pill">Books + music</span><span class="pill">Solo</span></div>
+            <p class="pitch">A mood-based discovery site for books and music. Pick how you're feeling and it suggests what to read and what to listen to, with playlist curation and interactive dashboards. I came up with the idea and built it on my own.</p>
+            <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Full-stack</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-track="Smaller projects">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Side B</span>
+        <h2>Smaller <em>projects</em></h2>
+      </div>
+      <ol class="tracklist">
+        <li><span class="n">B1</span><div><h3>Feedback sentiment analysis</h3><p>An NLP pipeline that classifies student feedback, turning free text into insights for course improvement.</p></div><span class="tech">Python · NLP · ML</span></li>
+        <li><span class="n">B2</span><div><h3>Two-tier memory management</h3><p>Uses machine learning to decide where data lives across memory tiers, for faster access.</p></div><span class="tech">Python · ML</span></li>
+        <li><span class="n">B3</span><div><h3>Internship matching marketplace</h3><p>A relational system that matches students to internships by skills and eligibility, with automatic shortlisting.</p></div><span class="tech">SQL · Database design</span></li>
+        <li><span class="n">B4</span><div><h3>Smart expense tracker</h3><p>Sorts spending into categories and shows monthly insights, with data saved locally.</p></div><span class="tech">Python</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="experience" data-track="Credits">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Credits</span>
+        <h2>Experience &amp; <em>leadership</em></h2>
+      </div>
+      <div class="credits">
+        <div class="panel">
+          <p class="subhead">Experience</p>
+          <div class="timeline">
+            <div class="role">
+              <span class="when">MAY – AUG 2026</span>
               <h3>Software Development Intern</h3>
               <p class="org">Freyr Solutions · regulatory affairs and consulting</p>
               <ul>
@@ -163,71 +204,55 @@
                 <li>Worked across frontend, backend and UI/UX, taking tools from interface design to integration.</li>
               </ul>
             </div>
-          </div>
-          <div class="role">
-            <span class="when">Jun – Aug 2025</span>
-            <div>
+            <div class="role">
+              <span class="when">JUN – AUG 2025</span>
               <h3>Business Development &amp; Sales Intern</h3>
               <p class="org">Metvy</p>
               <ul>
                 <li>Led lead generation, client outreach and acquisition, turning prospects into closed sales.</li>
               </ul>
-              <span class="badge">Star Intern for sales performance</span>
+              <span class="badge">★ Star Intern for sales performance</span>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="section-body">
-        <div class="content">
+        <div class="panel">
           <p class="subhead">Leadership</p>
           <div class="timeline">
-            <div class="role">
-              <span class="when">Apr 2026 – now</span>
-              <div><h3>Co-Chairperson</h3><p class="org">ACM-W, Shiv Nadar</p></div>
-            </div>
-            <div class="role">
-              <span class="when">Jan – Mar 2026</span>
-              <div><h3>Content Lead</h3><p class="org">HackData, a nationwide hackathon</p></div>
-            </div>
-            <div class="role">
-              <span class="when">Apr 2025 – Mar 2026</span>
-              <div><h3>Content Lead</h3><p class="org">ACM-W, Shiv Nadar</p></div>
-            </div>
+            <div class="role"><span class="when">APR 2026 – NOW</span><h3>Co-Chairperson</h3><p class="org">ACM-W, Shiv Nadar</p></div>
+            <div class="role"><span class="when">JAN – MAR 2026</span><h3>Content Lead</h3><p class="org">HackData, a nationwide hackathon</p></div>
+            <div class="role"><span class="when">APR 2025 – MAR 2026</span><h3>Content Lead</h3><p class="org">ACM-W, Shiv Nadar</p></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="about">
+  <section class="section" id="about" data-track="Liner notes">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">About</span>
-        <h2>Engineer, with an economist's habit</h2>
+        <span class="eyebrow">Liner notes</span>
+        <h2>About <em>me</em></h2>
       </div>
-      <div class="section-body">
-        <div class="content about">
-          <div class="prose">
-            <p>I study computer science with a minor in economics, and the economics shows up in how I build. Before I write code, I ask what a mistake would cost and who pays for it. That question decided SafeShare's no-server rule and MythTrace's attack tests.</p>
-            <p>I'm most interested in AI for high-stakes industries and in how people actually use these systems. I've also worked on the business side, in sales at Metvy, and I like being the person who can talk to users and then go build the thing.</p>
-            <p>Away from the screen I'm a trained Kathak dancer, and I read, write, make music and bake.</p>
-          </div>
-          <dl class="facts">
-            <div><dt>Based in</dt><dd>Gurgaon, India</dd></div>
-            <div><dt>Studying</dt><dd>B.Tech Computer Science &amp; Engineering, minor in Economics · Shiv Nadar Institution of Eminence</dd></div>
-            <div><dt>Interests</dt><dd>AI in high-stakes industries, human-computer interaction, information retrieval</dd></div>
-            <div><dt>Toolkit</dt><dd>Python, TypeScript, React, FastAPI, SQL, OpenCV</dd></div>
-            <div><dt>Dance</dt><dd>Kathak, Senior Diploma with Distinction</dd></div>
-          </dl>
+      <div class="about">
+        <div class="prose">
+          <p>I study computer science with a minor in economics, and the economics shows up in how I build. Before I write code, I ask what a mistake would cost and who pays for it. That question shaped SafeShare's no-upload rule and MythTrace's attack tests.</p>
+          <p>I'm most excited by AI in high-stakes industries and by how people actually use these systems. I've also worked on the business side, in sales at Metvy, and I like being the person who can talk to users and then go build the thing.</p>
+          <p>Away from the screen I'm a trained Kathak dancer, and I read, write, make music and bake.</p>
         </div>
+        <dl class="facts">
+          <div><dt>Based in</dt><dd>Gurgaon, India</dd></div>
+          <div><dt>Studying</dt><dd>B.Tech Computer Science &amp; Engineering, minor in Economics · Shiv Nadar Institution of Eminence</dd></div>
+          <div><dt>Toolkit</dt><dd>Python, TypeScript, React, FastAPI, SQL</dd></div>
+          <div><dt>Dance</dt><dd>Kathak, Senior Diploma with Distinction</dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <section class="section contact" id="contact">
-    <div class="wrap">
-      <h2>Let's talk.</h2>
+  <section class="section" id="contact" data-track="Contact">
+    <div class="wrap contact">
+      <span class="eyebrow">Encore</span>
+      <h2>Let's <em>talk</em>.</h2>
       <p class="lede">I'm open to internships and research roles in AI, especially where reliability matters.</p>
       <div class="channels">
         <div class="channel">
@@ -235,18 +260,18 @@
           <span class="value" id="email-value">anvigupta2402@gmail.com</span>
           <div class="row">
             <button class="copy" type="button" id="copy-email" data-copy="anvigupta2402@gmail.com">Copy</button>
-            <a class="copy as-link" href="mailto:anvigupta2402@gmail.com">Write</a>
+            <a class="copy" href="mailto:anvigupta2402@gmail.com">Write</a>
           </div>
         </div>
         <div class="channel">
           <span class="label">LinkedIn</span>
           <span class="value">in/anvi-gupta446779360</span>
-          <div class="row"><a class="copy as-link" href="https://www.linkedin.com/in/anvi-gupta446779360" target="_blank" rel="noopener">Open profile</a></div>
+          <div class="row"><a class="copy" href="https://www.linkedin.com/in/anvi-gupta446779360" target="_blank" rel="noopener">Open profile</a></div>
         </div>
         <div class="channel">
           <span class="label">GitHub</span>
           <span class="value">github.com/anvii24</span>
-          <div class="row"><a class="copy as-link" href="https://github.com/anvii24" target="_blank" rel="noopener">Open profile</a></div>
+          <div class="row"><a class="copy" href="https://github.com/anvii24" target="_blank" rel="noopener">Open profile</a></div>
         </div>
       </div>
     </div>
@@ -256,26 +281,37 @@
 <footer class="site">
   <div class="wrap">
     <span>© 2026 Anvi Gupta</span>
-    <span>Built with plain HTML and CSS</span>
+    <span>Made under the stars, in plain HTML and CSS</span>
   </div>
 </footer>
+</div>
 
+<div class="player" id="player" aria-label="Now playing">
+  <div class="disc" aria-hidden="true"></div>
+  <div class="info">
+    <span class="now"><span class="eqbars" aria-hidden="true"><b></b><b></b><b></b></span>Now playing</span>
+    <span class="title" aria-live="polite">Intro</span>
+    <span class="progress" aria-hidden="true"><i></i></span>
+  </div>
+  <button type="button" aria-label="Play ambient sound" aria-pressed="false"></button>
+</div>
+
+<script src="site.js"></script>
 <script>
+  // Copy email
   (function () {
     var btn = document.getElementById("copy-email");
     if (!btn) return;
     btn.addEventListener("click", function () {
       var text = btn.getAttribute("data-copy");
-      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
+      function done() { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
       function select() {
         var el = document.getElementById("email-value");
         var range = document.createRange(); range.selectNodeContents(el);
         var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
         btn.textContent = "Selected";
       }
-      try {
-        navigator.clipboard.writeText(text).then(done, select);
-      } catch (e) { select(); }
+      try { navigator.clipboard.writeText(text).then(done, select); } catch (e) { select(); }
     });
   })();
 </script>
