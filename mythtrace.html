@@ -61,7 +61,7 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><span class="hand">what we built</span><h2>Every search step, written by hand</h2></div>
+      <div class="section-head"><span class="hand">what we built</span><h2>Every search step, built from scratch</h2></div>
       <div class="section-body"><div class="content prose-col">
         <p>No library does the indexing or ranking. We crawled <strong>1,000 MedlinePlus pages</strong> politely (following robots.txt, one request per second), split them into <strong>2,762 sections</strong>, and built our own inverted index, tf-idf and BM25 ranking, and PageRank over the link graph. The top five sections go to Claude, which must cite a source after every claim and say "I don't have enough information" when the sources don't cover the question.</p>
         <h3>Then we attacked it</h3>
@@ -153,11 +153,11 @@
       <div class="section-head"><span class="hand">who did what</span><h2>A team of three</h2></div>
       <div class="section-body"><div class="content stack">
         <div class="team">
-          <div class="you"><span class="label">Anvi Gupta</span><h3>System and pipeline</h3><p>Designed the system and built the crawler, chunking, text processing, inverted and positional index, tf-idf and BM25 ranking, PageRank, defenses and the answer layer, using Claude Code.</p></div>
+          <div class="you"><span class="label">Anvi Gupta</span><h3>System and pipeline</h3><p>Designed the system and built the crawler, chunking, text processing, inverted and positional index, tf-idf and BM25 ranking, PageRank, defenses and the answer layer.</p></div>
           <div><span class="label">Antara Shyam</span><h3>Attacks and labelling</h3><p>Set up API access, wrote the 16 fake pages from real Indian health myths, and hand-labelled all 96 attacked answers.</p></div>
           <div><span class="label">Mihir MKC</span><h3>Ethics and evaluation</h3><p>Checked the robots.txt rules of candidate sites and wrote the 25 test questions with expected pages and reference answers.</p></div>
         </div>
-        <p class="fineprint">All three of us chose the topic, tested each stage, ran the experiments, designed the demo app and wrote the report. Most of the code was written with Claude Code, following our prompts and design decisions; every component was run and checked by the team. The fake pages are false health claims made for a security experiment. They are not health advice.</p>
+        <p class="fineprint">All three of us chose the topic, tested each stage, ran the experiments, designed the demo app and wrote the report. The fake pages are false health claims made for a security experiment. They are not health advice.</p>
       </div></div>
     </div>
   </section>
