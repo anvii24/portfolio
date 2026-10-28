@@ -276,7 +276,7 @@ h3 { font-family: var(--sans); font-weight: 600; line-height: 1.2; }
 .contact h2 { font-size: clamp(3rem, 9vw, 6.4rem); }
 .contact h2 em { font-style: italic; color: var(--glow); text-shadow: 0 0 40px rgba(201, 184, 255, 0.45); }
 .contact .lede { color: var(--muted); font-size: 1.15rem; max-width: 30em; }
-.channels { margin-top: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: 860px; }
+.channels { margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: 1040px; }
 .channel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; text-align: left; min-width: 0; transition: border-color .2s ease; }
 .channel:hover { border-color: var(--line-2); }
 .channel .value { overflow-wrap: anywhere; font-weight: 600; }
@@ -423,3 +423,17 @@ td.zero { color: var(--gold); font-weight: 600; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
 @keyframes blinkeyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
 @media (prefers-reduced-motion: reduce) { .sun.ufo, .ufo-beam, .light, .alien-eyes { animation: none !important; } }
+
+/* LitTune screenshot: show the headline side */
+.photo img.pos-left { object-position: left top; }
+/* Song name shows only while the music plays */
+.player .song-name { display: none; text-transform: none; letter-spacing: 0.02em; color: var(--glow); }
+.player.playing .song-name { display: inline; }
+@media (max-width: 900px) { .channels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Phones: hide the player */
+@media (max-width: 640px) {
+  .player { display: none; }
+  body { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .channels { grid-template-columns: minmax(0, 1fr); }
+}
+.player .now { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

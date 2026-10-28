@@ -105,39 +105,138 @@
   window.addEventListener("resize", update);
   update();
 
-  // Ambient pad, made in the browser (no audio files). Starts only when the visitor presses play.
+  // "Midnight Pages": a soft lo-fi loop composed in code (no audio files, nothing downloaded).
+  // Chords Fmaj7 - Em7 - Dm7 - Cmaj7 at 72 bpm, with a music-box melody, warm pad, bass,
+  // brushed hi-hats and a little vinyl crackle. Starts only when the visitor presses play.
   var audio = null;
-  function startAudio() {
+  function hz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  var CHORDS = [
+    { root: 41, tones: [53, 57, 60, 64] },  // Fmaj7
+    { root: 40, tones: [52, 55, 59, 62] },  // Em7
+    { root: 38, tones: [50, 53, 57, 60] },  // Dm7
+    { root: 36, tones: [48, 52, 55, 59] }   // Cmaj7
+  ];
+  // melody: one bar of eighth notes per chord, as indexes into the chord tones (+12 = octave up); -1 = rest
+  var MELODY = [
+    [3, 12, 14, -1, 13, 12, 3, -1],
+    [12, -1, 13, 14, 13, -1, 3, 2],
+    [14, 13, 12, -1, 3, -1, 12, 13],
+    [12, -1, 3, 2, 3, -1, -1, -1]
+  ];
+  function buildAudio() {
     var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return false;
-    if (!audio) {
-      var ac = new AC();
-      var master = ac.createGain(); master.gain.value = 0;
-      var filter = ac.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = 900;
-      var delay = ac.createDelay(); delay.delayTime.value = 0.45;
-      var fb = ac.createGain(); fb.gain.value = 0.35;
-      filter.connect(master); filter.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(master);
-      master.connect(ac.destination);
-      // A soft Fmaj9 chord, slowly breathing
-      [174.61, 220.0, 261.63, 329.63, 392.0].forEach(function (f, i) {
-        var o = ac.createOscillator(); o.type = i % 2 ? "sine" : "triangle"; o.frequency.value = f;
-        o.detune.value = (i - 2) * 4;
-        var g = ac.createGain(); g.gain.value = 0.05;
-        var lfo = ac.createOscillator(); lfo.frequency.value = 0.05 + i * 0.03;
-        var lg = ac.createGain(); lg.gain.value = 0.035;
-        lfo.connect(lg); lg.connect(g.gain);
-        o.connect(g); g.connect(filter); o.start(); lfo.start();
-      });
-      audio = { ac: ac, master: master };
+    if (!AC) return null;
+    var ac = new AC();
+    var master = ac.createGain(); master.gain.value = 0;
+    var tone = ac.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 3200; // warm, lo-fi top end
+    tone.connect(master); master.connect(ac.destination);
+    var echo = ac.createDelay(); echo.delayTime.value = 60 / 72 * 0.75;
+    var echoFb = ac.createGain(); echoFb.gain.value = 0.32;
+    var echoOut = ac.createGain(); echoOut.gain.value = 0.35;
+    echo.connect(echoFb); echoFb.connect(echo); echo.connect(echoOut); echoOut.connect(tone);
+
+    // noise buffer for hats and crackle
+    var nb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), nd = nb.getChannelData(0);
+    for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+    // vinyl crackle: sparse clicks over a quiet hiss
+    var cb = ac.createBuffer(1, ac.sampleRate * 4, ac.sampleRate), cd = cb.getChannelData(0);
+    for (var j = 0; j < cd.length; j++) cd[j] = (Math.random() * 2 - 1) * 0.012 + (Math.random() < 0.0004 ? (Math.random() * 2 - 1) * 0.5 : 0);
+    var crackle = ac.createBufferSource(); crackle.buffer = cb; crackle.loop = true;
+    var cg = ac.createGain(); cg.gain.value = 0.5;
+    var chp = ac.createBiquadFilter(); chp.type = "highpass"; chp.frequency.value = 1200;
+    crackle.connect(chp); chp.connect(cg); cg.connect(tone); crackle.start();
+
+    function pluck(t, m, vol) {          // music box
+      var o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain();
+      o.type = "sine"; o.frequency.value = hz(m);
+      o2.type = "sine"; o2.frequency.value = hz(m) * 2.01;
+      var g2 = ac.createGain(); g2.gain.value = 0.18;
+      o.connect(g); o2.connect(g2); g2.connect(g);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
+      g.connect(tone); g.connect(echo);
+      o.start(t); o2.start(t); o.stop(t + 1.5); o2.stop(t + 1.5);
     }
+    function pad(t, notes, dur) {
+      var f = ac.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 900; f.connect(tone);
+      notes.forEach(function (m, k) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.type = "triangle"; o.frequency.value = hz(m); o.detune.value = (k - 1.5) * 5;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.028, t + 0.8);
+        g.gain.setValueAtTime(0.028, t + dur - 0.6);
+        g.gain.linearRampToValueAtTime(0.0001, t + dur + 0.2);
+        o.connect(g); g.connect(f); o.start(t); o.stop(t + dur + 0.3);
+      });
+    }
+    function bass(t, m, dur) {
+      var o = ac.createOscillator(), g = ac.createGain();
+      o.type = "sine"; o.frequency.value = hz(m);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.16, t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(tone); o.start(t); o.stop(t + dur + 0.05);
+    }
+    function kick(t) {
+      var o = ac.createOscillator(), g = ac.createGain();
+      o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.18);
+      g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+      o.connect(g); g.connect(tone); o.start(t); o.stop(t + 0.32);
+    }
+    function hat(t, vol) {
+      var s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+      s.buffer = nb; f.type = "highpass"; f.frequency.value = 7000;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+      s.connect(f); f.connect(g); g.connect(tone); s.start(t, Math.random()); s.stop(t + 0.08);
+    }
+
+    var beat = 60 / 72, bar = beat * 4, step = beat / 2;
+    var state = { next: 0, i: 0, timer: null };
+    function schedule() {
+      while (state.next < ac.currentTime + 0.4) {
+        var t = state.next, i = state.i;
+        var barN = Math.floor(i / 8), s8 = i % 8, chord = CHORDS[barN % 4];
+        var swing = (s8 % 2) ? step * 0.12 : 0;   // a little lazy swing on the off-beats
+        if (s8 === 0) { pad(t, chord.tones, bar); bass(t, chord.root, beat * 1.8); kick(t); }
+        if (s8 === 4) { bass(t, chord.root + 7, beat * 1.6); }
+        if (s8 === 5 && barN % 2) kick(t + swing);
+        hat(t + swing, s8 % 2 ? 0.035 : 0.02);
+        if (barN >= 4) {                         // melody enters after the intro
+          var n = MELODY[barN % 4][s8];
+          if (n >= 0) {
+            var m = n >= 12 ? chord.tones[n - 12] + 12 : chord.tones[n];
+            pluck(t + swing, m + 12, 0.07 + Math.random() * 0.02);
+          }
+        }
+        state.next += step; state.i++;
+      }
+    }
+    return {
+      ac: ac, master: master,
+      start: function () {
+        state.next = ac.currentTime + 0.1;
+        if (!state.timer) state.timer = setInterval(schedule, 100);
+        schedule();
+      },
+      stop: function () { clearInterval(state.timer); state.timer = null; }
+    };
+  }
+  function startAudio() {
+    if (!audio) audio = buildAudio();
+    if (!audio) return false;
     audio.ac.resume();
+    audio.start();
     audio.master.gain.cancelScheduledValues(audio.ac.currentTime);
-    audio.master.gain.setTargetAtTime(0.5, audio.ac.currentTime, 0.8);
+    audio.master.gain.setTargetAtTime(0.75, audio.ac.currentTime, 0.6);
     return true;
   }
   function stopAudio() {
     if (!audio) return;
-    audio.master.gain.setTargetAtTime(0, audio.ac.currentTime, 0.4);
+    audio.master.gain.cancelScheduledValues(audio.ac.currentTime);
+    audio.master.gain.setTargetAtTime(0, audio.ac.currentTime, 0.3);
+    var a = audio;
+    setTimeout(function () { if (!player.classList.contains("playing")) { a.stop(); a.ac.suspend(); } }, 1500);
   }
   var playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
   var pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>';
